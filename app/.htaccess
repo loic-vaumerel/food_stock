@@ -1,0 +1,2 @@
+# Application code, templates and .env: never reachable over HTTP.
+Require all denied

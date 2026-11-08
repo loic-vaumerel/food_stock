@@ -1,0 +1,20 @@
+# Food stock - public web root rules.
+# Requires "AllowOverride All" (or at least AuthConfig Options FileInfo Indexes) for this directory.
+
+Options -Indexes
+DirectoryIndex index.php
+
+# Never serve dotfiles (.env, .env.example, .gitignore, .htaccess, .git ...)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Never serve documentation, SQL or backup/editor files
+<FilesMatch "\.(md|sql|example|bak|swp|orig|dist|ini|log)$|~$">
+    Require all denied
+</FilesMatch>
+
+# Defence in depth: hide non-public folders even if their own .htaccess is removed
+<IfModule mod_alias.c>
+    RedirectMatch 404 ^/food_stock/(app|sql)(/.*)?$
+</IfModule>
