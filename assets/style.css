@@ -285,8 +285,11 @@ button, .button {
     .stock td:nth-child(1) { grid-area: product; }
     .stock td:nth-child(2) { grid-area: packaging; }
     .stock td:nth-child(3) { grid-area: quantity; text-align: right; }
+    .stock td:nth-child(3)::before { content: "x "; }
     .stock td:nth-child(4) { grid-area: stored; color: var(--muted); }
+    .stock td:nth-child(4)::before { content: "add: "; }
     .stock td:nth-child(5) { grid-area: expires; }
+    .stock td:nth-child(5)::before { content: "exp: "; }
     /* The actions cell is dissolved so each link can sit in its own grid area. */
     .stock td:nth-child(6) { display: contents; }
     /* Links stay hidden until the card is tapped; they sit above the tap overlay. */
