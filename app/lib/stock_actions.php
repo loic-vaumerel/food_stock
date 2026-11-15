@@ -17,17 +17,25 @@ function add_stock(array $input): void
     upsert_stock_entry(['product_id' => $productId] + $input);
 }
 
-/** Change packaging and/or quantity; merges into an identical entry if there is one. */
-function edit_stock_entry(int $id, int $containerId, int $milli, string $unit, int $quantity): void
+/**
+ * Change the product name (shared by all its entries), packaging, quantity and dates.
+ * Merges into an identical entry if there is one. A duplicate product name rolls everything back.
+ *
+ * @param array{product_name: string, container_id: int, milli: int, unit: string, quantity: int, storage_date: string, expiry_date: ?string} $changes
+ */
+function edit_stock_entry(int $id, array $changes): void
 {
-    db_transaction(function () use ($id, $containerId, $milli, $unit, $quantity): void {
+    db_transaction(function () use ($id, $changes): void {
         $entry = lock_stock_entry($id);
+        rename_product($entry['product_id'], $changes['product_name']);
         delete_stock_entry($id);
         upsert_stock_entry(array_replace($entry, [
-            'container_id' => $containerId,
-            'milli' => $milli,
-            'unit' => $unit,
-            'quantity' => $quantity,
+            'container_id' => $changes['container_id'],
+            'milli' => $changes['milli'],
+            'unit' => $changes['unit'],
+            'quantity' => $changes['quantity'],
+            'storage_date' => $changes['storage_date'],
+            'expiry_date' => $changes['expiry_date'],
         ]));
     });
 }

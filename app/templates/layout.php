@@ -7,6 +7,9 @@
     <meta name="robots" content="noindex, nofollow">
     <title><?= e(t((string) $v['title'])) ?> · <?= e(t('Food stock')) ?></title>
     <link rel="stylesheet" href="<?= e(app_url('assets/style.css')) ?>">
+    <link rel="stylesheet" href="<?= e(app_url('assets/fontawesome/css/fontawesome.min.css')) ?>">
+    <link rel="stylesheet" href="<?= e(app_url('assets/fontawesome/css/regular.min.css')) ?>">
+    <link rel="stylesheet" href="<?= e(app_url('assets/fontawesome/css/solid.min.css')) ?>">
 </head>
 <body>
 <?php if ($v['user'] !== null): ?>

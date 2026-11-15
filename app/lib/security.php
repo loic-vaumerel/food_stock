@@ -8,7 +8,7 @@ defined('FOOD_APP') || exit;
 function send_security_headers(): void
 {
     header_remove('X-Powered-By');
-    header("Content-Security-Policy: default-src 'none'; style-src 'self'; img-src 'self'; "
+    header("Content-Security-Policy: default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; "
         . "form-action 'self'; frame-ancestors 'none'; base-uri 'none'");
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: DENY');

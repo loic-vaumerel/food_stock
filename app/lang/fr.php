@@ -43,8 +43,8 @@ return [
     'Stored on' => 'Stocké le',
     'Expires on' => 'Périme le',
     'Actions' => 'Actions',
-    'Manage' => 'Gérer',
-    'Other packaging' => 'Autre conditionnement',
+    'View/Edit' => 'Voir/Modifier',
+    'Add same' => 'Ajouter le même',
 
     // add food / stock entry
     'Back to stock' => 'Retour au stock',
@@ -74,7 +74,8 @@ return [
     'Create another location first.' => 'Créez d’abord un autre emplacement.',
     'Destination' => 'Destination',
     'Move' => 'Déplacer',
-    'Change packaging or quantity' => 'Modifier le conditionnement ou la quantité',
+    'Edit details' => 'Modifier les informations',
+    'A product with this name already exists.' => 'Un produit porte déjà ce nom.',
     'Save' => 'Enregistrer',
 
     // locations / containers

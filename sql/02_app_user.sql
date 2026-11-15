@@ -9,7 +9,7 @@
 -- The application cannot: create/drop/alter tables, create users, read other
 -- databases, insert or delete users, change anything on a user but its password hash
 -- and interface language,
--- or update/delete products.
+-- or update products other than their name, or delete products.
 
 CREATE USER IF NOT EXISTS 'lvlotoamdat'@'%' IDENTIFIED BY 'CHANGE_ME_TO_A_LONG_RANDOM_PASSWORD';
 
@@ -26,8 +26,9 @@ GRANT SELECT, INSERT, DELETE ON lvlotoamdat.food_stock_login_attempts TO 'lvloto
 -- food_stock_locations: add, rename, delete (deleting a non-empty one is blocked by a FK).
 GRANT SELECT, INSERT, UPDATE, DELETE ON lvlotoamdat.food_stock_locations TO 'lvlotoamdat'@'%';
 
--- food_stock_products: the catalog only grows (created on the fly).
+-- food_stock_products: the catalog only grows (created on the fly); the name can be changed.
 GRANT SELECT, INSERT ON lvlotoamdat.food_stock_products TO 'lvlotoamdat'@'%';
+GRANT UPDATE (name) ON lvlotoamdat.food_stock_products TO 'lvlotoamdat'@'%';
 
 -- food_stock_containers: add, rename, delete (deleting a used one is blocked by a FK).
 GRANT SELECT, INSERT, UPDATE, DELETE ON lvlotoamdat.food_stock_containers TO 'lvlotoamdat'@'%';

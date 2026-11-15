@@ -6,12 +6,9 @@ defined('FOOD_APP') || exit;
 
 const ENTRY_FLASH = [
     'edit' => 'Stock entry updated.',
-    'remove_packages' => 'Packages removed.',
-    'remove_amount' => 'Amount removed.',
-    'move' => 'Packages moved.',
 ];
 
-/** Stock entry page: change packaging/quantity, remove packages or an amount, move. */
+/** Stock entry page: change packaging/quantity. Removal lives on the remove page. */
 function run_entry_page(): void
 {
     require_method(['GET', 'HEAD', 'POST']);
@@ -28,7 +25,6 @@ function run_entry_page(): void
         'entry' => $entry,
         'error' => $error,
         'containers' => all_containers(),
-        'locations' => all_locations(),
     ]);
 }
 
@@ -38,9 +34,6 @@ function handle_entry_post(int $id): string
     $action = post_string('action', 20);
     $error = run_user_action(fn () => match ($action) {
         'edit' => entry_action_edit($id),
-        'remove_packages' => remove_packages($id, parse_quantity(post_string('count', 10))),
-        'remove_amount' => remove_amount($id, post_string('amount', 20)),
-        'move' => entry_action_move($id),
         default => throw new UserError('Invalid request.'),
     });
     if ($error !== null) {
@@ -53,20 +46,13 @@ function handle_entry_post(int $id): string
 function entry_action_edit(int $id): void
 {
     $unit = parse_unit(post_string('unit', 10));
-    edit_stock_entry(
-        $id,
-        require_container_id(post_string('container', 10)),
-        parse_amount_input(post_string('amount', 20), $unit),
-        $unit,
-        parse_quantity(post_string('quantity', 10))
-    );
-}
-
-function entry_action_move(int $id): void
-{
-    move_packages(
-        $id,
-        require_location_id(post_string('location', 10)),
-        parse_quantity(post_string('count', 10))
-    );
+    edit_stock_entry($id, [
+        'product_name' => validate_name(post_string('name', 1000), NAME_MAX_LENGTH),
+        'container_id' => require_container_id(post_string('container', 10)),
+        'milli' => parse_amount_input(post_string('amount', 20), $unit),
+        'unit' => $unit,
+        'quantity' => parse_quantity(post_string('quantity', 10)),
+        'storage_date' => parse_date(post_string('storage_date', 10), true),
+        'expiry_date' => parse_date(post_string('expiry_date', 10), false),
+    ]);
 }

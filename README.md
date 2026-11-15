@@ -32,11 +32,6 @@ MariaDB 10.3 or later.
    mariadb -u root -p < sql/02_app_user.sql
    mariadb -u root -p < sql/03_test_data.sql   # dev only
    ```
-   **Upgrading** from the login-only step: re-run `01_schema.sql` (it adds the new tables) and
-   `02_app_user.sql` (it grants access to them).
-   **Upgrading** a database that still uses the old `food_` table prefix: run `05_rename_prefix.sql` **once** first
-   (renames tables, indexes and the FK, keeps the data, revokes grants on the old names), then re-run `02_app_user.sql`.
-   **Upgrading** to the French/English interface: run `04_user_language.sql` (it adds `food_stock_users.language`), then re-run `02_app_user.sql`.
 3. **Config**: `cp app/.env.example app/.env`, fill it in, then `chmod 640 app/.env`
    (readable by the Apache user only). `APP_TIMEZONE` (default UTC) and `EXPIRY_WARNING_DAYS`
    (default 7) are optional.

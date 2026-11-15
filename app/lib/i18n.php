@@ -19,6 +19,8 @@ const LANGUAGE_RETURN_PAGES = [
     'add' => 'stock_add.php',
     'locations' => 'locations.php',
     'containers' => 'containers.php',
+    'move' => 'move.php',
+    'remove' => 'remove.php',
     'login' => 'login.php',
 ];
 

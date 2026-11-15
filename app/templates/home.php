@@ -3,7 +3,7 @@
 <main class="content">
     <div class="page-head">
         <h1><?= e(t('Stock')) ?></h1>
-        <a class="button primary" href="<?= e(app_url('stock_add.php')) ?>"><?= e(t('Add food')) ?></a>
+        <a class="button primary" href="<?= e(app_url('stock_add.php')) ?>"><i class="fa-solid fa-plus" aria-hidden="true"></i> <?= e(t('Add food')) ?></a>
     </div>
 
     <form class="filters" method="get" action="<?= e(app_url('index.php')) ?>" role="search">
@@ -34,7 +34,7 @@
         <section class="location-group">
             <div class="group-head">
                 <h2><?= e($group['name']) ?></h2>
-                <a href="<?= e(app_url('stock_add.php?location=' . $group['id'])) ?>"><?= e(t('Add here')) ?></a>
+                <a href="<?= e(app_url('stock_add.php?location=' . $group['id'])) ?>"><i class="fa-solid fa-plus" aria-hidden="true"></i> <?= e(t('Add here')) ?></a>
             </div>
             <div class="table-wrap">
                 <table class="stock">
@@ -62,8 +62,10 @@
                                 <?php endif; ?>
                             </td>
                             <td class="actions">
-                                <a href="<?= e(app_url('entry.php?id=' . $entry['id'])) ?>"><?= e(t('Manage')) ?></a>
-                                <a href="<?= e(app_url('stock_add.php?product=' . $entry['product_id'] . '&location=' . $entry['location_id'])) ?>"><?= e(t('Other packaging')) ?></a>
+                                <a href="<?= e(app_url('entry.php?id=' . $entry['id'])) ?>"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> <?= e(t('View/Edit')) ?></a>
+                                <a href="<?= e(app_url('move.php?id=' . $entry['id'])) ?>"><i class="fa-solid fa-up-down-left-right" aria-hidden="true"></i> <?= e(t('Move')) ?></a>
+                                <a href="<?= e(app_url('stock_add.php?product=' . $entry['product_id'] . '&location=' . $entry['location_id'])) ?>"><i class="fa-solid fa-plus" aria-hidden="true"></i> <?= e(t('Add same')) ?></a>
+                                <a href="<?= e(app_url('remove.php?id=' . $entry['id'])) ?>"><i class="fa-solid fa-minus" aria-hidden="true"></i> <?= e(t('Remove')) ?></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

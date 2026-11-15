@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 defined('FOOD_APP') || exit;
 
+const PRODUCT_EXISTS = 'A product with this name already exists.';
+
+/** Renames the shared product: every stock entry of it shows the new name. */
+function rename_product(int $id, string $name): void
+{
+    db_run_unique('UPDATE food_stock_products SET name = ? WHERE id = ?', [$name, $id], PRODUCT_EXISTS);
+}
+
 /** @return list<string> */
 function product_names(): array
 {

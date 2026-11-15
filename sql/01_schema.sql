@@ -1,4 +1,4 @@
--- Food stock - schema (run as a MariaDB administrator, MariaDB >= 10.3).
+-- Food stock - schema for a fresh install (run as a MariaDB administrator, MariaDB >= 10.3).
 -- Re-runnable: never drops existing data.
 
 CREATE DATABASE IF NOT EXISTS lvlotoamdat
