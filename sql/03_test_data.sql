@@ -6,6 +6,9 @@
 
 USE lvlotoamdat;
 
+-- Initial list (needed in production too, not only for tests).
+INSERT IGNORE INTO food_stock_containers (name) VALUES ('bag'), ('box'), ('pack'), ('pot');
+
 INSERT IGNORE INTO food_stock_users (email, password_hash, is_active) VALUES
     ('a@example.com', '$2y$12$24nPH1Y07s3L.X1EvQLnJOYCthuqGtHUrsuqGfalbabIIKN.iiLSG', 1),
     ('b@example.com', '$2y$12$24nPH1Y07s3L.X1EvQLnJOYCthuqGtHUrsuqGfalbabIIKN.iiLSG', 1),

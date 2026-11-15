@@ -62,6 +62,7 @@ const NAV_PAGES = [
     'home' => ['index.php', 'Stock'],
     'locations' => ['locations.php', 'Locations'],
     'containers' => ['containers.php', 'Containers'],
+    'users' => ['users.php', 'Users'],
 ];
 
 /** @return list<array{0: int, 1: string}> */

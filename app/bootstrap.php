@@ -30,6 +30,7 @@ require APP_ROOT . '/lib/format.php';
 require APP_ROOT . '/lib/locations.php';
 require APP_ROOT . '/lib/products.php';
 require APP_ROOT . '/lib/containers.php';
+require APP_ROOT . '/lib/users.php';
 require APP_ROOT . '/lib/stock.php';
 require APP_ROOT . '/lib/stock_actions.php';
 require APP_ROOT . '/lib/stock_view.php';

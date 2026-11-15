@@ -16,7 +16,7 @@ The user's spec, glossary and rules are in `README.md` ("Stock rules"). Use the 
 - No build step, no test suite, no linter config. Syntax check inside the PHP container: `find . -name '*.php' -exec php -l {} \;`
 - DB setup (as MariaDB admin), in order: `sql/01_schema.sql` → `sql/02_app_user.sql` (edit the password first) → `sql/03_test_data.sql` (dev only, password `password`, `c@example.com` is inactive). All are re-runnable. After any schema change, re-run `02_app_user.sql`. Fresh installs only (no upgrade path). Needs MariaDB ≥ 10.3.
 - Config: `app/.env` (copy of `app/.env.example`), read via `env()` / `env_bool()` / `env_int()` (never `getenv`). Optional: `APP_TIMEZONE` (default UTC, defines "today" for storage dates and expiry highlights) and `EXPIRY_WARNING_DAYS` (default 7). Database and DB user are both named `lvlotoamdat`.
-- Create a user: `read -rs P && printf '%s' "$P" | php app/bin/hash_password.php; unset P`, then `INSERT INTO food_stock_users (email, password_hash) …`. There is no registration or user management in the app, by design.
+- Create a user: `read -rs P && printf '%s' "$P" | php app/bin/hash_password.php; unset P`, then `INSERT INTO food_stock_users (email, password_hash) …`. The first user can be created this way. Later users are managed on the `users.php` page (header "Users" link, any signed-in user): create, edit e-mail or password, deactivate or reactivate, or delete (hard delete, its login tokens cascade). There is no self-registration, no roles and no e-mail sending. You cannot deactivate or delete your own account.
 
 ## Architecture
 

@@ -6,16 +6,18 @@
 -- that container's host/subnet if you can (e.g. 'lvlotoamdat'@'172.18.%').
 -- Re-runnable: run it again after every schema change (grants are per table).
 --
--- The application cannot: create/drop/alter tables, create users, read other
--- databases, insert or delete users, change anything on a user but its password hash
--- and interface language,
--- or update products other than their name, or delete products.
+-- The application cannot: create/drop/alter tables, create database accounts, read other
+-- databases, change the users' ids or creation dates, or update products other than
+-- their name, or delete products.
 
 CREATE USER IF NOT EXISTS 'lvlotoamdat'@'%' IDENTIFIED BY 'CHANGE_ME_TO_A_LONG_RANDOM_PASSWORD';
 
--- food_stock_users: read + transparent password re-hash + saving the chosen language only.
+-- food_stock_users: read, create, edit e-mail / password / active flag, delete (users page),
+-- transparent password re-hash, and saving the chosen language.
 GRANT SELECT ON lvlotoamdat.food_stock_users TO 'lvlotoamdat'@'%';
-GRANT UPDATE (password_hash, language) ON lvlotoamdat.food_stock_users TO 'lvlotoamdat'@'%';
+GRANT INSERT (email, password_hash) ON lvlotoamdat.food_stock_users TO 'lvlotoamdat'@'%';
+GRANT UPDATE (email, password_hash, is_active, language) ON lvlotoamdat.food_stock_users TO 'lvlotoamdat'@'%';
+GRANT DELETE ON lvlotoamdat.food_stock_users TO 'lvlotoamdat'@'%';
 
 -- food_stock_auth_tokens: full row management (issue, rotate, revoke, purge).
 GRANT SELECT, INSERT, UPDATE, DELETE ON lvlotoamdat.food_stock_auth_tokens TO 'lvlotoamdat'@'%';

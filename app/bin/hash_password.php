@@ -17,13 +17,11 @@ if (PHP_SAPI !== 'cli') {
     exit;
 }
 
-const MIN_PASSWORD_LENGTH = 12;
-
 function read_password(): string
 {
     $password = rtrim((string) stream_get_contents(STDIN), "\r\n");
-    if (strlen($password) < MIN_PASSWORD_LENGTH || strlen($password) > 1024) {
-        fwrite(STDERR, 'Password must be between ' . MIN_PASSWORD_LENGTH . " and 1024 characters.\n");
+    if ($password === '' || strlen($password) > 1024) {
+        fwrite(STDERR, "Password must be between 1 and 1024 characters.\n");
         exit(1);
     }
     return $password;

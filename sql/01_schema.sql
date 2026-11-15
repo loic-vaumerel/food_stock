@@ -89,9 +89,6 @@ CREATE TABLE IF NOT EXISTS food_stock_containers (
     UNIQUE KEY uq_food_stock_containers_name_key (name_key)
 ) ENGINE=InnoDB;
 
--- Initial list (needed in production too, not only for tests).
-INSERT IGNORE INTO food_stock_containers (name) VALUES ('bag'), ('box'), ('pack'), ('pot');
-
 -- Stock entry: product + location + packaging (container + amount + unit) + quantity + dates.
 -- Amounts are always stored normalised (below 1 kg / 1 l converted down to g / ml), so the
 -- UNIQUE "identity" key is what makes identical entries merge (INSERT ... ON DUPLICATE KEY).
