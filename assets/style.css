@@ -156,6 +156,7 @@ button, .button {
 }
 
 .alert { margin: 0 0 1.25rem; color: var(--danger); background: var(--danger-bg); }
+.alert-compact { padding: .3rem .6rem; margin: 0 0 1rem; font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .empty, .muted { color: var(--muted); }
 .muted { font-size: .85rem; }
 
@@ -249,6 +250,58 @@ button, .button {
 .stock .row-expired:hover { background: var(--danger-bg); }
 .stock .row-soon:hover { background: var(--warn-bg); }
 
+/* Phone: each stock entry becomes a 3-line card.
+   Line 1: product, packaging, quantity. Line 2: stored on, expires on. Line 3: links. */
+@media (max-width: 600px) {
+    .stock thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .stock, .stock tbody { display: block; }
+    .stock tbody tr {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr) auto;
+        grid-template-areas:
+            "product packaging quantity"
+            "stored expires expires";
+        gap: .35rem .75rem;
+        padding: .75rem 1rem;
+        border-bottom: 1px solid var(--line);
+    }
+    /* Tapped card: the four links each get their own centred line. */
+    .stock tbody tr:has(.row-check:checked) {
+        grid-template-areas:
+            "product packaging quantity"
+            "stored expires expires"
+            "edit edit edit"
+            "move move move"
+            "same same same"
+            "remove remove remove";
+    }
+    /* The label covers the whole card, so a tap anywhere on it toggles the links. */
+    .row-toggle { display: block; cursor: pointer; }
+    .row-toggle::after { content: ""; position: absolute; inset: 0; }
+    .row-check:focus-visible + .row-toggle { outline: 2px solid var(--text); outline-offset: 2px; }
+    .stock tbody tr:last-child { border-bottom: 0; }
+    .stock td, .stock td:first-child, .stock td:last-child { padding: 0; border: 0; }
+    .stock td:nth-child(1) { grid-area: product; }
+    .stock td:nth-child(2) { grid-area: packaging; }
+    .stock td:nth-child(3) { grid-area: quantity; text-align: right; }
+    .stock td:nth-child(4) { grid-area: stored; color: var(--muted); }
+    .stock td:nth-child(5) { grid-area: expires; }
+    /* The actions cell is dissolved so each link can sit in its own grid area. */
+    .stock td:nth-child(6) { display: contents; }
+    /* Links stay hidden until the card is tapped; they sit above the tap overlay. */
+    .stock .actions a { display: none; position: relative; z-index: 1; justify-self: center; margin: 0; padding: .3rem 0; white-space: nowrap; font-size: .95rem; }
+    .stock tbody tr:has(.row-check:checked) .actions a { display: block; }
+    .stock .actions a:nth-child(1) { grid-area: edit; }
+    .stock .actions a:nth-child(2) { grid-area: move; }
+    .stock .actions a:nth-child(3) { grid-area: same; }
+    .stock .actions a:nth-child(4) { grid-area: remove; }
+    /* Expiry marker moves from the first cell to the whole card. */
+    .stock .row-expired td:first-child, .stock .row-soon td:first-child { box-shadow: none; }
+    .stock .row-expired { box-shadow: inset 3px 0 0 var(--danger); }
+    .stock .row-soon { box-shadow: inset 3px 0 0 var(--warn); }
+}
+
 .badge { margin-left: .35rem; font-size: .75rem; font-weight: 500; white-space: nowrap; }
 .badge-expired { color: var(--danger); }
 .badge-soon { color: var(--warn); }
@@ -265,3 +318,37 @@ button, .button {
 .lang-switch button:hover { color: var(--text); }
 .lang-switch button[aria-pressed="true"] { color: #fff; background: var(--ink); }
 .auth-card .lang-switch { float: right; }
+
+/* ---------- header menu (phones) ----------
+   Desktop: the panel is transparent, so nav and user sit in the bar as before. */
+.menu-check, .menu-toggle { display: none; }
+.menu-panel { display: contents; }
+
+@media (max-width: 600px) {
+    .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        margin-left: auto;
+        padding: .3rem .7rem;
+        font-size: .85rem;
+        color: var(--text);
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius);
+        cursor: pointer;
+    }
+    .menu-check:focus-visible + .menu-toggle { outline: 2px solid var(--text); outline-offset: 2px; }
+    .menu-panel { display: none; }
+    .menu-check:checked ~ .menu-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        flex-basis: 100%;
+        gap: 1rem;
+        padding-top: .25rem;
+    }
+    .nav { flex-direction: column; gap: .75rem; }
+    .nav a { font-size: 1rem; }
+    .user { margin-left: 0; justify-content: space-between; }
+    .email { max-width: none; }
+}

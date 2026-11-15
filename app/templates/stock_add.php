@@ -43,7 +43,6 @@
             <select id="container" name="container" required>
                 <?= select_options(container_options($v['containers']), $form['container'], 'Choose…') ?>
             </select>
-            <small><a href="<?= e(app_url('containers.php')) ?>"><?= e(t('New container type')) ?></a></small>
         </div>
 
         <div class="field">

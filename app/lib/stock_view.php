@@ -54,6 +54,23 @@ function find_stock_entry_view(int $id): ?array
     return $row === null ? null : decorate_stock_row($row);
 }
 
+/**
+ * Stock entries already expired and entries expiring soon, across all locations.
+ * Ignores the search and location filters, so the banner always shows the whole stock.
+ * @return array{expired: int, soon: int}
+ */
+function expiry_counts(): array
+{
+    $counts = ['expired' => 0, 'soon' => 0];
+    foreach (stock_rows('', null) as $row) {
+        $status = expiry_status($row['expiry_date']);
+        if ($status !== '') {
+            $counts[$status]++;
+        }
+    }
+    return $counts;
+}
+
 /** Adds display-ready (not yet escaped) fields. */
 function decorate_stock_row(array $row): array
 {

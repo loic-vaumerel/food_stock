@@ -14,6 +14,7 @@ function run_home_page(): void
         'page' => 'home',
         'filters' => $filters,
         'locations' => all_locations(),
+        'alerts' => expiry_counts(),
         'groups' => stock_groups($filters['q'], $filters['location']),
     ]);
 }

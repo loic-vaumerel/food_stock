@@ -1,6 +1,19 @@
 <?php defined('FOOD_APP') || exit; ?>
 <?php $filters = $v['filters']; ?>
+<?php $alerts = $v['alerts']; ?>
 <main class="content">
+    <?php if ($alerts['expired'] > 0 || $alerts['soon'] > 0): ?>
+        <?php
+        $parts = [];
+        if ($alerts['expired'] > 0) {
+            $parts[] = t('Expired: {count}', ['count' => $alerts['expired']]);
+        }
+        if ($alerts['soon'] > 0) {
+            $parts[] = t('Expires soon: {count}', ['count' => $alerts['soon']]);
+        }
+        ?>
+        <div class="alert alert-compact" role="alert"><?= e(implode(' · ', $parts)) ?></div>
+    <?php endif; ?>
     <div class="page-head">
         <h1><?= e(t('Stock')) ?></h1>
         <a class="button primary" href="<?= e(app_url('stock_add.php')) ?>"><i class="fa-solid fa-plus" aria-hidden="true"></i> <?= e(t('Add food')) ?></a>
@@ -17,7 +30,7 @@
                 <option value="<?= (int) $location['id'] ?>"<?= $filters['location'] === (int) $location['id'] ? ' selected' : '' ?>><?= e((string) $location['name']) ?></option>
             <?php endforeach; ?>
         </select>
-        <button type="submit" class="secondary"><?= e(t('Filter')) ?></button>
+        <button type="submit" class="secondary"><i class="fa-solid fa-filter" aria-hidden="true"></i> <?= e(t('Filter')) ?></button>
         <?php if ($filters['q'] !== '' || $filters['location'] !== null): ?>
             <a href="<?= e(app_url('index.php')) ?>"><?= e(t('Reset')) ?></a>
         <?php endif; ?>
@@ -51,7 +64,11 @@
                     <tbody>
                     <?php foreach ($group['entries'] as $entry): ?>
                         <tr<?= $entry['status'] !== '' ? ' class="row-' . e($entry['status']) . '"' : '' ?>>
-                            <td><?= e($entry['product_name']) ?></td>
+                            <td>
+                                <!-- Phone only: tapping the card toggles its links (no JavaScript, the CSP forbids scripts). -->
+                                <input type="checkbox" id="row-<?= (int) $entry['id'] ?>" class="row-check visually-hidden">
+                                <label for="row-<?= (int) $entry['id'] ?>" class="row-toggle"><?= e($entry['product_name']) ?></label>
+                            </td>
                             <td><?= e($entry['packaging']) ?></td>
                             <td class="num"><?= (int) $entry['quantity'] ?></td>
                             <td><?= e($entry['storage_label']) ?></td>

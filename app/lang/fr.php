@@ -9,6 +9,7 @@ return [
     // layout, navigation, auth
     'Food stock' => 'Stock alimentaire',
     'Main navigation' => 'Navigation principale',
+    'Menu' => 'Menu',
     'Language' => 'Langue',
     'Stock' => 'Stock',
     'Locations' => 'Emplacements',
@@ -146,6 +147,8 @@ return [
     'pieces' => 'pièces',
     'Expired' => 'Périmé',
     'Expires soon' => 'Bientôt périmé',
+    'Expired: {count}' => 'Périmés : {count}',
+    'Expires soon: {count}' => 'Bientôt périmés : {count}',
     '{month} {day}, {year}' => '{day} {month} {year}',
     'Jan' => 'janv.', 'Feb' => 'févr.', 'Mar' => 'mars', 'Apr' => 'avr.',
     'May' => 'mai', 'Jun' => 'juin', 'Jul' => 'juil.', 'Aug' => 'août',
